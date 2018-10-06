@@ -1,17 +1,39 @@
-struct Time
+class Time
 {
-	int hours;
-	int minutes;
+private:
+	int hours, minutes;
+
+public:
+	Time() {
+		hours = 0;
+		minutes = 0;
+	}
+
+	int getHours() const {
+		return hours;
+	}
 	
-	// Method returns the time delta between dep and arr time arguments
-	static Time getDeltaTime(Time dep, Time arr) {
-		if (dep.hours > arr.hours) {
-			arr.hours += 24;
+	int getMinutes() const {
+		return minutes;
+	}
+
+	void setHours(const int& h) {
+		hours = h;
+	}
+
+	void setMinutes(const int& m) {
+		minutes = m;
+	}
+	
+	Time getDeltaTime(const Time& to) {
+		int to_hours = to.hours;
+		if (this->hours > to.hours) {
+			to_hours += 24;
 		}
 
 		Time difference;
-		difference.hours = arr.hours - dep.hours - 1;
-		difference.minutes = arr.minutes + (60 - dep.minutes);
+		difference.hours = to_hours - (this->hours) - 1;
+		difference.minutes = to.minutes + (60 - (this->minutes));
 		if (difference.minutes >= 60) {
 			difference.hours++;
 			difference.minutes = difference.minutes - 60;
@@ -20,29 +42,37 @@ struct Time
 		return difference;
 	}
 
-	//	Method returns the greater of the two time arguments
-	static Time greater(Time t1, Time t2) {
-		if (t1.hours < t2.hours) {
-			return t2;
+	bool operator>=(const Time& other) {
+		if (this->hours < other.hours) {
+			return false;
 		}
-		else if (t1.hours > t2.hours) {
-			return t1;
+		else if (this->hours > other.hours) {
+			return true;
+		}
+		else if(this->hours == other.hours) {
+			return this->minutes > other.minutes ? true : false;
 		}
 		else {
-			return t1.minutes >= t2.minutes ? t1 : t2;
+			return true;
 		}
 	}
 
-	//	Method returns the smaller of the two time arguments
-	static Time lesser(Time t1, Time t2) {
-		if (t1.hours < t2.hours) {
-			return t1;
+	bool operator<=(const Time& other) {
+		if (this->hours < other.hours) {
+			return true;
 		}
-		else if (t1.hours > t2.hours) {
-			return t2;
+		else if (this->hours > other.hours) {
+			return false;
+		}
+		else if (this->hours == other.hours) {
+			return this->minutes > other.minutes ? false : true;
 		}
 		else {
-			return t1.minutes >= t2.minutes ? t2 : t1;
+			return true;
 		}
+	}
+	
+	std::string toString() {
+		return std::to_string(getHours()) + ":" + std::to_string(getMinutes());
 	}
 };

@@ -3,29 +3,28 @@
 #include <iostream>
 #include <sstream>
 #include "Time.hpp"
-
 #define CARCOUNT 3
 
 /*
 	Helper method: Reads departure and arrival time from a console line
 	Return type: std::pair<Time, Time> 
-*/
+**/
 std::pair<Time, Time> readCarTimes() {	
 	std::string input;
 	std::getline(std::cin, input);
 	std::istringstream iss(input);
 
 	std::pair<Time, Time> times;
-	int i = 0, temp;
+	int wordCount = 0, temp;
 	while (iss >> temp)
 	{
-		switch (i) {
-			case 0: times.first.hours = temp; break;
-			case 1: times.first.minutes = temp; break;
-			case 2: times.second.hours = temp; break;
-			case 3: times.second.minutes = temp; break;
+		switch (wordCount) {
+			case 0: times.first.setHours(temp); break;
+			case 1: times.first.setMinutes(temp); break;
+			case 2: times.second.setHours(temp); break;
+			case 3: times.second.setMinutes(temp); break;
 		}
-		i++;
+		wordCount++;
 	}
 	return times;
 }
@@ -41,20 +40,19 @@ int main()
 	// Calculate Time Deltas for all cars
 	Time* deltaTimes = new Time[CARCOUNT];
 	for (int i = 0; i < CARCOUNT; i++) {
-		Time currentDeltaTime = Time::getDeltaTime(carTimes[i].first, carTimes[i].second);
-		deltaTimes[i] = currentDeltaTime;
+		deltaTimes[i] = carTimes[i].first.getDeltaTime(carTimes[i].second);
 	}
 	
 	// Get max and min time
 	Time min = deltaTimes[0], max = deltaTimes[0];
 	for (int i = 1; i < CARCOUNT; i++) {
-		min = Time::lesser(min, deltaTimes[i]);
-		max = Time::greater(max, deltaTimes[i]);
+		min = min <= deltaTimes[i] ? min : deltaTimes[i];
+		max = max >= deltaTimes[i] ? max : deltaTimes[i];
 	}
 	
 	// Print Result
-	std::cout << min.hours << ":" << min.minutes << std::endl;
-	std::cout << max.hours << ":" << max.minutes << std::endl;
+	std::cout << min.toString() << std::endl;
+	std::cout << max.toString() << std::endl;
 	
 	delete carTimes;
 	delete deltaTimes;

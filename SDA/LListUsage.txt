@@ -1,0 +1,59 @@
+LList<int> list;
+list.ToEnd(1);
+list.ToEnd(2);
+list.IterStart();
+elem_link<int> *p = list.Iter();
+list.InsertBefore(p, 3);
+list.InsertAfter(p, 4);
+list.print();
+// 3 4 1 2
+
+LList<int> list; int x;
+list.ToEnd(1);
+list.ToEnd(2);
+list.IterStart();
+elem_link<int> *p = list.Iter();
+list.InsertBefore(p, 3);
+list.InsertAfter(p, 4);
+list.print();
+list.DeleteElem(p, x);
+list.print(); // 4 1 2
+list.IterStart();
+p = list.Iter();
+list.DeleteAfter(p, x);
+list.print(); // 4 2
+list.IterStart();
+p = list.Iter();
+p = list.Iter();
+list.DeleteBefore(p, x);
+list.print(); // 2
+
+LList<int> list; int x;
+list.ToEnd(1);
+list.ToEnd(2);
+list.IterStart();
+elem_link<int> *p = list.Iter();
+list.InsertBefore(p, 3);
+list.InsertAfter(p, 4);
+list.print();
+list.DeleteElem(p, x);
+list.print(); // 4 1 2
+list.DeleteAfter(p, x); error
+
+LList<int> list; int x;
+list.ToEnd(1);
+list.ToEnd(2);
+list.IterStart();
+elem_link<int> *p = list.Iter();
+list.InsertBefore(p, 3);
+list.InsertAfter(p, 4);
+list.print();
+list.DeleteElem(p, x);
+list.print(); // 4 1 2
+list.IterStart();
+p = list.Iter();
+list.DeleteAfter(p, x);
+list.print(); // 4 2
+p = list.Iter();
+list.DeleteBefore(p, x);
+list.print(); error

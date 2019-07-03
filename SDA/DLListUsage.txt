@@ -1,0 +1,30 @@
+DList<int> list;
+list.ToEnd(1);
+list.ToEnd(2);
+list.ToEnd(3);
+list.ToEnd(4);
+list.print();
+list.print_reverse();
+cout << list.length();
+// 1 2 3 4
+// 4 3 2 1
+// 4
+
+DList<int> list;
+list.ToEnd(1);
+list.ToEnd(2);
+list.ToEnd(3);
+list.ToEnd(4);
+list.print(); // 1 2 3 4
+list.print_reverse(); // 4 3 2 1
+cout << list.length(); // 4
+list.IterStart();
+elem_link2<int> *p = list.IterNext();
+list.DeleteElem(p, x);
+list.print();
+list.IterEnd();
+elem_link2<int> *q = list.IterPrev();
+list.DeleteElem(q, x);
+list.print();
+// 2 3 4
+// 2 3
